@@ -83,6 +83,12 @@ export default function LoginPage() {
             </button>
           </form>
 
+          <div className="text-center mt-3">
+            <Link to="/recuperar-contrasena" className="text-muted small">
+              ¿Olvidaste tu contraseña?
+            </Link>
+          </div>
+
           <p className="mt-3 mb-0 text-muted">
             ¿No tienes cuenta? <Link to="/registro">Regístrate</Link>
           </p>

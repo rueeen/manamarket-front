@@ -7,6 +7,11 @@ import LoadingOverlay from '../components/LoadingOverlay';
 import { formatMoney } from '../utils/format';
 
 const extraCostFields = [
+  {
+    key: 'shipping_clp_override',
+    label: 'Envío real (CLP)',
+    hint: 'Si difiere del detectado en el Excel, ingresa el valor correcto aquí. Reemplaza al calculado automáticamente.',
+  },
   { key: 'import_duties_clp', label: 'Derechos de importación (CLP)' },
   { key: 'customs_fee_clp', label: 'Aduana / customs fee (CLP)' },
   { key: 'handling_fee_clp', label: 'Manejo / handling (CLP)' },
@@ -20,6 +25,7 @@ const initialExtraCosts = {
   handling_fee_clp: '',
   paypal_variation_clp: '',
   other_costs_clp: '',
+  shipping_clp_override: '',
 };
 
 const normalizeList = (data) => data?.results || data || [];
@@ -104,23 +110,28 @@ export default function PurchaseOrderImport() {
     source_store: sourceStore || 'Card Kingdom',
   });
 
-  const buildCreatePayload = () => ({
-    file,
-    supplier_id: supplierId || undefined,
-    supplier_name: supplierId ? undefined : supplierName.trim(),
-    source_store: sourceStore || 'Card Kingdom',
-    original_currency: previewCurrency,
-    update_prices_on_receive: updatePricesOnReceive,
-    auto_match_scryfall: autoMatchScryfall,
-    create_missing_products: createMissingProducts,
-    activate_products: activateCreatedProducts,
-    ...Object.fromEntries(
-      Object.entries(extraCosts).map(([key, value]) => [
-        key,
-        Number(value || 0),
-      ])
-    ),
-  });
+  const buildCreatePayload = () => {
+    const { shipping_clp_override, ...otherCosts } = extraCosts;
+
+    return {
+      file,
+      supplier_id: supplierId || undefined,
+      supplier_name: supplierId ? undefined : supplierName.trim(),
+      source_store: sourceStore || 'Card Kingdom',
+      original_currency: previewCurrency,
+      update_prices_on_receive: updatePricesOnReceive,
+      auto_match_scryfall: autoMatchScryfall,
+      create_missing_products: createMissingProducts,
+      activate_products: activateCreatedProducts,
+      shipping_clp_override: Number(shipping_clp_override || 0),
+      ...Object.fromEntries(
+        Object.entries(otherCosts).map(([key, value]) => [
+          key,
+          Number(value || 0),
+        ])
+      ),
+    };
+  };
 
   const validateBase = () => {
     if (!(file instanceof File)) {
@@ -378,6 +389,9 @@ export default function PurchaseOrderImport() {
                   }
                   disabled={creating}
                 />
+                {field.hint && (
+                  <div className="form-text text-muted">{field.hint}</div>
+                )}
               </div>
             ))}
           </div>

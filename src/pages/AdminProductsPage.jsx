@@ -88,7 +88,7 @@ const buildPayload = (form) => {
       }
     });
 
-    formData.append('image', form._imageFile);
+    formData.append('image_file', form._imageFile);
     return formData;
   }
 

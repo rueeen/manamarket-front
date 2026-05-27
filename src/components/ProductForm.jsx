@@ -44,6 +44,8 @@ export const initialFormState = {
   set_code: '',
 
   image: '',
+  _imageMode: 'url', 
+  _imageFile: null, 
   price_clp: '',
   stock: '0',
   stock_minimum: '0',

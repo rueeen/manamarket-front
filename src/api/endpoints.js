@@ -66,8 +66,14 @@ export const api = {
     return allProducts;
   },
   productById: (id) => apiClient.get(`/api/products/products/${id}/`),
-  createProduct: (payload) => apiClient.post('/api/products/products/', payload),
-  updateProduct: (id, payload) => apiClient.put(`/api/products/products/${id}/`, payload),
+  createProduct: (payload, isFormData = false) =>
+    apiClient.post('/api/products/products/', payload, {
+      headers: isFormData ? { 'Content-Type': 'multipart/form-data' } : {},
+    }),
+  updateProduct: (id, payload, isFormData = false) =>
+    apiClient.patch(`/api/products/products/${id}/`, payload, {
+      headers: isFormData ? { 'Content-Type': 'multipart/form-data' } : {},
+    }),
   patchProduct: (id, payload) => apiClient.patch(`/api/products/products/${id}/`, payload),
   deleteProduct: (id) => apiClient.delete(`/api/products/products/${id}/`),
   addBundleItem: (bundleId, payload) =>

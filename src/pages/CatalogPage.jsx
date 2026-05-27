@@ -274,9 +274,22 @@ export default function CatalogPage() {
       </div>
 
       {loading ? (
-        <div className="panel-card p-4 text-center text-muted">Cargando catálogo...</div>
+        <div
+          className="d-flex align-items-center justify-content-center text-muted"
+          style={{ minHeight: 'calc(100vh - 400px)' }}
+        >
+          <div className="text-center">
+            <div className="spinner-border spinner-border-sm mb-2 d-block mx-auto" role="status" />
+            Cargando catálogo...
+          </div>
+        </div>
       ) : filteredProducts.length === 0 ? (
-        <div className="panel-card p-4 text-center text-muted">No hay productos disponibles para los filtros seleccionados.</div>
+        <div
+          className="d-flex align-items-center justify-content-center text-muted"
+          style={{ minHeight: 'calc(100vh - 400px)' }}
+        >
+          No hay productos disponibles para los filtros seleccionados.
+        </div>
       ) : (
         <div className="catalog-sections">
           {orderedTypes.map((sectionType) => (

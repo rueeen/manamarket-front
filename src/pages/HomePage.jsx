@@ -80,11 +80,19 @@ export default function HomePage() {
   return (
     <>
       <div
-        id="heroBannerSlider"
-        className="carousel slide mb-4 rounded-4 overflow-hidden"
-        data-bs-ride="carousel"
-        data-bs-interval="4000"
+        style={{
+          marginLeft: 'calc(-50vw + 50%)',
+          marginRight: 'calc(-50vw + 50%)',
+          marginTop: '-1.5rem',
+          marginBottom: '1.5rem',
+        }}
       >
+        <div
+          id="heroBannerSlider"
+          className="carousel slide"
+          data-bs-ride="carousel"
+          data-bs-interval="4500"
+        >
         <div className="carousel-indicators">
           {[banner1, banner2, banner3].map((_, i) => (
             <button
@@ -113,7 +121,7 @@ export default function HomePage() {
                 className="d-block w-100"
                 alt={`Banner ${i + 1}`}
                 style={{
-                  maxHeight: 380,
+                  height: 'clamp(200px, 35vw, 420px)',
                   objectFit: 'cover',
                   objectPosition: 'center',
                 }}
@@ -122,25 +130,26 @@ export default function HomePage() {
           ))}
         </div>
 
-        <button
-          className="carousel-control-prev"
+          <button
+            className="carousel-control-prev"
           type="button"
           data-bs-target="#heroBannerSlider"
           data-bs-slide="prev"
         >
           <span className="carousel-control-prev-icon" aria-hidden="true" />
           <span className="visually-hidden">Anterior</span>
-        </button>
+          </button>
 
-        <button
-          className="carousel-control-next"
-          type="button"
-          data-bs-target="#heroBannerSlider"
-          data-bs-slide="next"
-        >
-          <span className="carousel-control-next-icon" aria-hidden="true" />
-          <span className="visually-hidden">Siguiente</span>
-        </button>
+          <button
+            className="carousel-control-next"
+            type="button"
+            data-bs-target="#heroBannerSlider"
+            data-bs-slide="next"
+          >
+            <span className="carousel-control-next-icon" aria-hidden="true" />
+            <span className="visually-hidden">Siguiente</span>
+          </button>
+        </div>
       </div>
 
       {loading ? (

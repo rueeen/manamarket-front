@@ -24,6 +24,12 @@ export const clearAuthSession = () => {
   localStorage.removeItem('authUser');
 };
 
+const handleSessionExpired = () => {
+  clearAuthSession();
+  localStorage.removeItem('refreshToken');
+  window.dispatchEvent(new CustomEvent('auth:session-expired'));
+};
+
 const extractErrorMessage = (error) => {
   const data = error.response?.data;
 
@@ -149,12 +155,7 @@ apiClient.interceptors.response.use(
           processQueue(refreshError, null);
 
           // El refresh falló — sesión realmente expirada
-          clearAuthSession();
-          localStorage.removeItem('refreshToken');
-
-          if (!silent) {
-            notyf.error('Tu sesión expiró. Inicia sesión nuevamente.');
-          }
+          handleSessionExpired();
 
           return Promise.reject(refreshError);
         } finally {
@@ -163,11 +164,7 @@ apiClient.interceptors.response.use(
       }
 
       // No hay refresh token — cerrar sesión directamente
-      clearAuthSession();
-
-      if (!silent) {
-        notyf.error('Tu sesión expiró. Inicia sesión nuevamente.');
-      }
+      handleSessionExpired();
 
       return Promise.reject(error);
     }

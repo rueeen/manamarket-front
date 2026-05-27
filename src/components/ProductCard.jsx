@@ -10,6 +10,7 @@ const getCard = (product) => {
 
 const getImage = (product, card) => {
   return (
+    product?.image_url ||   // ← agregar primero
     product?.image ||
     card?.image_small ||
     card?.image_normal ||

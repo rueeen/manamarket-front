@@ -2,6 +2,7 @@ import { Link, NavLink, Outlet } from 'react-router-dom';
 
 import { useAuth } from '../hooks/useAuth';
 import { useCart } from '../hooks/useCart';
+import logoImg from '../images/logo.png';
 
 const roleLabels = {
   admin: 'Administrador',
@@ -28,9 +29,12 @@ export default function MainLayout() {
     <>
       <nav className="navbar navbar-expand-lg main-navbar sticky-top">
         <div className="container">
-          <Link className="navbar-brand fw-bold brand-title" to="/">
-            <i className="bi bi-magic me-2" />
-            ManaMarket
+          <Link className="navbar-brand d-flex align-items-center gap-2" to="/">
+            <img
+              src={logoImg}
+              alt="ManaMarket"
+              style={{ height: 44, width: 'auto', objectFit: 'contain' }}
+            />
           </Link>
 
           <button

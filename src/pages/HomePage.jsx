@@ -6,6 +6,9 @@ import { fetchAllPaginated } from '../api/pagination';
 import ProductCarousel from '../components/ProductCarousel';
 import ProductSlider from '../components/ProductSlider';
 import { useCart } from '../hooks/useCart';
+import banner1 from '../images/banner1.webp';
+import banner2 from '../images/banner2.jpg';
+import banner3 from '../images/banner3.webp';
 import { getProductTypeValue } from '../utils/product';
 
 const PRODUCT_TYPE_ORDER = ['bundle', 'sealed', 'single', 'accessory', 'service', 'other'];
@@ -76,44 +79,69 @@ export default function HomePage() {
 
   return (
     <>
-      <section className="hero-banner rounded-4 p-5 mb-4 text-white">
-        <div className="row align-items-center g-4">
-          <div className="col-lg-7">
-            <span className="badge badge-warning mb-3">
-              Magic: The Gathering Store
-            </span>
-
-            <h1 className="display-5 fw-bold mb-3">
-              Singles, sellados y bundles para tu próxima partida
-            </h1>
-
-            <p className="lead mb-4">
-              Encuentra cartas individuales, productos sellados y compras especiales
-              con inventario controlado, precios en CLP y seguimiento de pedidos.
-            </p>
-
-            <div className="d-flex flex-wrap gap-2">
-              <Link to="/catalogo" className="btn btn-primary">
-                Ver catálogo
-              </Link>
-
-              <Link to="/mis-pedidos" className="btn btn-outline-light">
-                Mis pedidos
-              </Link>
-            </div>
-          </div>
-
-          <div className="col-lg-5">
-            <div className="panel-card p-3">
-              <h5 className="mb-2">Compra simple y segura</h5>
-              <p className="text-muted mb-0">
-                Agrega productos al carrito, genera tu orden y espera confirmación
-                del equipo para completar el flujo de venta.
-              </p>
-            </div>
-          </div>
+      <div
+        id="heroBannerSlider"
+        className="carousel slide mb-4 rounded-4 overflow-hidden"
+        data-bs-ride="carousel"
+        data-bs-interval="4000"
+      >
+        <div className="carousel-indicators">
+          {[banner1, banner2, banner3].map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              data-bs-target="#heroBannerSlider"
+              data-bs-slide-to={i}
+              className={i === 0 ? 'active' : ''}
+              aria-current={i === 0 ? 'true' : undefined}
+              aria-label={`Banner ${i + 1}`}
+              style={{
+                width: 10,
+                height: 10,
+                borderRadius: '50%',
+                backgroundColor: 'rgba(255,255,255,0.6)',
+              }}
+            />
+          ))}
         </div>
-      </section>
+
+        <div className="carousel-inner">
+          {[banner1, banner2, banner3].map((src, i) => (
+            <div key={i} className={`carousel-item ${i === 0 ? 'active' : ''}`}>
+              <img
+                src={src}
+                className="d-block w-100"
+                alt={`Banner ${i + 1}`}
+                style={{
+                  maxHeight: 380,
+                  objectFit: 'cover',
+                  objectPosition: 'center',
+                }}
+              />
+            </div>
+          ))}
+        </div>
+
+        <button
+          className="carousel-control-prev"
+          type="button"
+          data-bs-target="#heroBannerSlider"
+          data-bs-slide="prev"
+        >
+          <span className="carousel-control-prev-icon" aria-hidden="true" />
+          <span className="visually-hidden">Anterior</span>
+        </button>
+
+        <button
+          className="carousel-control-next"
+          type="button"
+          data-bs-target="#heroBannerSlider"
+          data-bs-slide="next"
+        >
+          <span className="carousel-control-next-icon" aria-hidden="true" />
+          <span className="visually-hidden">Siguiente</span>
+        </button>
+      </div>
 
       {loading ? (
         <div className="panel-card p-4 text-center text-muted">

@@ -97,11 +97,6 @@ export default function MainLayout() {
                         </NavLink>
                       </li>
 
-                      <li className="nav-item">
-                        <NavLink className="nav-link" to="/biblioteca">
-                          Mis singles
-                        </NavLink>
-                      </li>
                     </>
                   )}
 

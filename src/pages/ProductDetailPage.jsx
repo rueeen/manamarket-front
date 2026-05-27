@@ -53,7 +53,7 @@ export default function ProductDetailPage() {
 
   const card = useMemo(() => getCard(product), [product]);
 
-  const stock = Number(product?.stock || 0);
+  const stock = Number(product?.available_stock ?? product?.stock ?? 0);
   const isFoil = getIsFoil(product);
   const canBuy = stock > 0 && product?.is_active !== false;
 

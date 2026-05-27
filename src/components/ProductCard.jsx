@@ -46,7 +46,7 @@ const getSetCode = (product, card) => {
 };
 
 export default function ProductCard({ product, onAdd }) {
-  const stock = Number(product?.stock || 0);
+  const stock = Number(product?.available_stock ?? product?.stock ?? 0);
   const card = getCard(product);
   const price = product?.computed_price_clp || product?.price_clp;
   const type = getProductTypeValue(product);

@@ -159,6 +159,74 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* Sección sobre nosotros */}
+      <section
+        style={{
+          padding: '2.5rem 0 2rem',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: '1rem',
+        }}
+      >
+        {/* Quiénes somos */}
+        <div className="panel-card p-4" style={{ borderLeft: '3px solid var(--color-primary)' }}>
+          <div className="mb-2" style={{ fontSize: '1.4rem' }}>
+            🧙
+          </div>
+          <h6 className="fw-bold mb-2" style={{ color: 'var(--color-primary)' }}>
+            ¿Quiénes somos?
+          </h6>
+          <p className="text-muted mb-0" style={{ fontSize: '0.875rem', lineHeight: 1.6 }}>
+            Somos una tienda de Magic: The Gathering en Arica. Llevamos años vendiendo cartones
+            ilustrados con estadísticas y textos en letra microscópica. Nuestros clientes los
+            coleccionan, los juegan, y a veces los lloran.
+          </p>
+        </div>
+
+        {/* Qué vendemos */}
+        <div className="panel-card p-4" style={{ borderLeft: '3px solid var(--color-success)' }}>
+          <div className="mb-2" style={{ fontSize: '1.4rem' }}>
+            📦
+          </div>
+          <h6 className="fw-bold mb-2" style={{ color: 'var(--color-success)' }}>
+            ¿Qué vendemos?
+          </h6>
+          <p className="text-muted mb-0" style={{ fontSize: '0.875rem', lineHeight: 1.6 }}>
+            Singles, sellados y bundles cuidadosamente seleccionados. También hacemos encargos
+            especiales para cuando necesitas esa carta específica que destruirá la amistad de todos
+            en la mesa.
+          </p>
+        </div>
+
+        {/* Cómo funciona */}
+        <div className="panel-card p-4" style={{ borderLeft: '3px solid var(--color-warning)' }}>
+          <div className="mb-2" style={{ fontSize: '1.4rem' }}>
+            🛒
+          </div>
+          <h6 className="fw-bold mb-2" style={{ color: 'var(--color-warning)' }}>
+            ¿Cómo comprar?
+          </h6>
+          <p className="text-muted mb-0" style={{ fontSize: '0.875rem', lineHeight: 1.6 }}>
+            Agrega al carrito, paga con Webpay y espera tu pedido. Simple, rápido, y con menos
+            burocracia que conseguir un land cuando más lo necesitas.
+          </p>
+        </div>
+
+        {/* Contacto / confianza */}
+        <div className="panel-card p-4" style={{ borderLeft: '3px solid var(--color-blue)' }}>
+          <div className="mb-2" style={{ fontSize: '1.4rem' }}>
+            📬
+          </div>
+          <h6 className="fw-bold mb-2" style={{ color: 'var(--color-blue-soft)' }}>
+            Confianza garantizada
+          </h6>
+          <p className="text-muted mb-0" style={{ fontSize: '0.875rem', lineHeight: 1.6 }}>
+            Stock real, precios en CLP y seguimiento de tu pedido. Porque ya es suficientemente
+            doloroso perder en torneo — no necesitas también perder tu plata.
+          </p>
+        </div>
+      </section>
+
       {loading ? (
         <div
           style={{ minHeight: 'calc(100vh - 520px)' }}

@@ -120,7 +120,37 @@ export default function HomePage() {
           ))}
         </div>
 
-        <div className="carousel-inner">
+        <div className="carousel-inner" style={{ position: 'relative' }}>
+          {/* Fade izquierdo */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              bottom: 0,
+              width: '12%',
+              background: 'linear-gradient(to right, #0b1220 0%, transparent 100%)',
+              zIndex: 2,
+              pointerEvents: 'none',
+            }}
+          />
+
+          {/* Fade derecho */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              bottom: 0,
+              width: '12%',
+              background: 'linear-gradient(to left, #0b1220 0%, transparent 100%)',
+              zIndex: 2,
+              pointerEvents: 'none',
+            }}
+          />
+
           {[banner1, banner2, banner3].map((src, i) => (
             <div key={i} className={`carousel-item ${i === 0 ? 'active' : ''}`}>
               <img
@@ -129,8 +159,8 @@ export default function HomePage() {
                 alt={`Banner ${i + 1}`}
                 style={{
                   height: 'clamp(200px, 35vw, 420px)',
-                  objectFit: 'contain',
-                  background: '#000',
+                  objectFit: 'cover',
+                  objectPosition: 'center',
                 }}
               />
             </div>
@@ -166,33 +196,22 @@ export default function HomePage() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          padding: '3rem 1rem',
-          maxWidth: 720,
-          margin: '0 auto',
+          alignItems: 'center',
+          textAlign: 'center',
+          padding: '2rem 1rem',
         }}
       >
-        <h2 style={{ color: 'var(--color-primary)', marginBottom: '1.5rem' }}>
-          Sobre ManaMarket
-        </h2>
-
-        <p style={{ color: 'var(--color-text-soft)', lineHeight: 1.8, marginBottom: '1rem' }}>
-          Somos una tienda de Magic: The Gathering en Arica. Llevamos años vendiendo
-          cartones ilustrados con estadísticas y textos en letra microscópica que la
-          gente colecciona, juega, y a veces llora.
-        </p>
-
-        <p style={{ color: 'var(--color-text-soft)', lineHeight: 1.8, marginBottom: '1rem' }}>
-          Tenemos singles, sellados, bundles y hacemos encargos especiales para
-          cuando necesitas esa carta específica que destruirá la amistad de todos
-          en la mesa. Porque si vas a hacer sufrir a tus amigos, al menos hazlo
-          con estilo.
-        </p>
-
-        <p style={{ color: 'var(--color-muted)', lineHeight: 1.8 }}>
-          Stock real, precios en CLP, pago con Webpay y seguimiento de tu pedido.
-          Simple, rápido, y con menos burocracia que conseguir un land cuando más
-          lo necesitas — que ya es suficientemente doloroso perder en torneo como
-          para encima perder tu plata.
+        <p
+          style={{
+            color: 'var(--color-muted)',
+            fontSize: '0.95rem',
+            maxWidth: 480,
+            lineHeight: 1.7,
+            margin: 0,
+          }}
+        >
+          Tienda de Magic: The Gathering en Arica — singles, sellados y encargos
+          especiales para cuando necesitas esa carta que arruinará la noche de todos.
         </p>
       </section>
 

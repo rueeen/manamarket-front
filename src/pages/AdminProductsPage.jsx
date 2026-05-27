@@ -83,7 +83,7 @@ const buildPayload = (form) => {
     const payload = buildProductPayload(form);
 
     Object.entries(payload).forEach(([key, value]) => {
-      if (value !== null && value !== undefined) {
+      if (value !== null && value !== undefined && value !== '') {
         formData.append(key, value);
       }
     });

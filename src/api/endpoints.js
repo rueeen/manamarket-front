@@ -30,6 +30,10 @@ export const api = {
     apiClient.post('/api/accounts/logout/', { refresh: refreshToken }),
   me: () => apiClient.get('/api/accounts/me/'),
   changePassword: (payload) => apiClient.patch('/api/accounts/me/password/', payload),
+  requestPasswordReset: (payload) =>
+    apiClient.post('/api/accounts/password-reset/', payload),
+  confirmPasswordReset: (payload) =>
+    apiClient.post('/api/accounts/password-reset/confirm/', payload),
   adminUsers: (params = {}) => apiClient.get('/api/accounts/users/', { params }),
   adminUserById: (id) => apiClient.get(`/api/accounts/users/${id}/`),
   adminUpdateUser: (id, payload) => apiClient.patch(`/api/accounts/users/${id}/`, payload),

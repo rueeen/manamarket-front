@@ -25,6 +25,7 @@ import LoginPage from './pages/LoginPage';
 import OrdersPage from './pages/OrdersPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import ProfilePage from './pages/ProfilePage';
+import RequestPasswordResetPage from './pages/RequestPasswordResetPage';
 import PurchaseOrderImport from './pages/PurchaseOrderImport';
 import RegisterPage from './pages/RegisterPage';
 import ScryfallSingleCreate from './pages/ScryfallSingleCreate';
@@ -32,6 +33,7 @@ import PricingSettingsPage from './pages/PricingSettingsPage';
 import PaymentFinalPage from './pages/PaymentFinalPage';
 import PaymentReturnPage from './pages/PaymentReturnPage';
 import DigitalLibraryPage from './pages/DigitalLibraryPage';
+import ConfirmPasswordResetPage from './pages/ConfirmPasswordResetPage';
 
 export default function App() {
   return (
@@ -82,6 +84,11 @@ export default function App() {
 
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registro" element={<RegisterPage />} />
+        <Route path="/recuperar-contrasena" element={<RequestPasswordResetPage />} />
+        <Route
+          path="/recuperar-contrasena/:token"
+          element={<ConfirmPasswordResetPage />}
+        />
         <Route path="/pago/retorno" element={<PaymentReturnPage />} />
         <Route path="/pago/final" element={<PaymentFinalPage />} />
       </Route>

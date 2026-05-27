@@ -160,8 +160,14 @@ export default function HomePage() {
       </div>
 
       {loading ? (
-        <div className="panel-card p-4 text-center text-muted">
-          Cargando productos destacados...
+        <div
+          style={{ minHeight: 'calc(100vh - 520px)' }}
+          className="d-flex align-items-center justify-content-center"
+        >
+          <div className="text-center text-muted">
+            <div className="spinner-border spinner-border-sm mb-2 d-block mx-auto" role="status" />
+            Cargando productos destacados...
+          </div>
         </div>
       ) : products.length === 0 ? (
         <div className="panel-card p-4 text-center text-muted">

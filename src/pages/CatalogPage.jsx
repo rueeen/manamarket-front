@@ -223,12 +223,12 @@ export default function CatalogPage() {
 
       <div className="panel-card p-3 mb-4">
         <div className="row g-2">
-          <div className="col-md-4">
+          <div className="col-12 col-md-4">
             <label className="form-label">Buscar</label>
             <input className="form-control" placeholder="Buscar carta o producto" value={query} onChange={(event) => setQuery(event.target.value)} />
           </div>
 
-          <div className="col-md-2">
+          <div className="col-12 col-md-2">
             <label className="form-label">Tipo</label>
             <select className="form-select" value={type} onChange={(event) => setType(event.target.value)}>
               <option value="">Todos</option>
@@ -242,7 +242,7 @@ export default function CatalogPage() {
 
           {showSingleOnlyFilters && (
             <>
-              <div className="col-md-2">
+              <div className="col-6 col-md-2">
                 <label className="form-label">Rareza</label>
                 <select className="form-select" value={rarity} onChange={(event) => setRarity(event.target.value)}>
                   <option value="">Todas</option>
@@ -251,7 +251,7 @@ export default function CatalogPage() {
                   ))}
                 </select>
               </div>
-              <div className="col-md-2">
+              <div className="col-6 col-md-2">
                 <label className="form-label">Foil</label>
                 <select className="form-select" value={foil} onChange={(event) => setFoil(event.target.value)}>
                   <option value="">Todos</option>
@@ -262,7 +262,7 @@ export default function CatalogPage() {
             </>
           )}
 
-          <div className="col-md-2">
+          <div className="col-12 col-md-2">
             <label className="form-label d-none d-md-block">&nbsp;</label>
             <button type="button" className="btn btn-outline-secondary w-100" onClick={clearFilters}>Limpiar</button>
           </div>

@@ -51,6 +51,7 @@ body {
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+  overflow-x: hidden;
 }
 
 a {
@@ -68,6 +69,7 @@ img {
 
 .main-container {
   min-height: calc(100vh - 220px);
+  overflow-x: hidden;
 }
 
 .text-muted,
@@ -743,11 +745,30 @@ img {
     top: 0;
     bottom: 0;
     z-index: 1050;
-    transition: left 0.2s ease;
+    transition: left 0.25s ease;
+    box-shadow: none;
   }
 
   .admin-sidebar.open {
     left: 0;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.6);
+  }
+
+  .admin-sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1049;
+    background: rgba(2, 6, 23, 0.65);
+    backdrop-filter: blur(2px);
+  }
+
+  .admin-sidebar-overlay.open {
+    display: block;
+  }
+
+  body.sidebar-open {
+    overflow: hidden;
   }
 
   .admin-content {

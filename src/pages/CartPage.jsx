@@ -122,7 +122,7 @@ export default function CartPage() {
             <h5 className="mb-3">Dirección de despacho</h5>
             <div className="row g-3">
 
-              <div className="col-md-6">
+              <div className="col-12 col-md-6">
                 <label className="form-label">
                   Nombre destinatario <span className="text-danger">*</span>
                 </label>
@@ -135,7 +135,7 @@ export default function CartPage() {
                 />
               </div>
 
-              <div className="col-md-6">
+              <div className="col-12 col-md-6">
                 <label className="form-label">Teléfono destinatario</label>
                 <input
                   className="form-control"
@@ -145,7 +145,7 @@ export default function CartPage() {
                 />
               </div>
 
-              <div className="col-md-8">
+              <div className="col-12 col-md-8">
                 <label className="form-label">
                   Calle <span className="text-danger">*</span>
                 </label>
@@ -158,7 +158,7 @@ export default function CartPage() {
                 />
               </div>
 
-              <div className="col-md-4">
+              <div className="col-12 col-md-4">
                 <label className="form-label">Número</label>
                 <input
                   className="form-control"
@@ -169,7 +169,7 @@ export default function CartPage() {
               </div>
 
               {/* Región PRIMERO, luego Comuna dependiente */}
-              <div className="col-md-6">
+              <div className="col-12 col-md-6">
                 <label className="form-label">
                   Región <span className="text-danger">*</span>
                 </label>
@@ -195,7 +195,7 @@ export default function CartPage() {
                 </select>
               </div>
 
-              <div className="col-md-6">
+              <div className="col-12 col-md-6">
                 <label className="form-label">
                   Comuna <span className="text-danger">*</span>
                 </label>

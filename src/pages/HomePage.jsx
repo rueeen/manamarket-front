@@ -83,10 +83,15 @@ export default function HomePage() {
     <>
       <div
         style={{
-          marginLeft: 'calc(-50vw + 50%)',
-          marginRight: 'calc(-50vw + 50%)',
+          width: '100vw',
+          position: 'relative',
+          left: '50%',
+          right: '50%',
+          marginLeft: '-50vw',
+          marginRight: '-50vw',
           marginTop: '-1.5rem',
           marginBottom: '1.5rem',
+          overflow: 'hidden',
         }}
       >
         <div

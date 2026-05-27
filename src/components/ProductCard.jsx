@@ -72,6 +72,8 @@ export default function ProductCard({ product, onAdd }) {
           src={getImage(product, card)}
           className="product-card-image"
           alt={product?.name || 'Producto'}
+          loading="lazy"
+          decoding="async"
         />
       </div>
 

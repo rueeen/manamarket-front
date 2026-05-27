@@ -44,7 +44,7 @@ export default function HomePage() {
 
   const availableProducts = useMemo(() => {
     return products.filter((product) => {
-      return Number(product?.stock || 0) > 0 || getProductTypeValue(product) === 'service';
+      return Number(product?.available_stock ?? product?.stock ?? 0) > 0 || getProductTypeValue(product) === 'service';
     });
   }, [products]);
 

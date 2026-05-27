@@ -49,26 +49,30 @@ const normalizeProductForForm = (product) => {
 };
 
 const buildProductPayload = (form) => {
-  return {
+  const payload = {
     name: form.name?.trim() || '',
     description: form.description || '',
     product_type: form.product_type,
     price_clp: Number(form.price_clp || 0),
     stock: Number(form.stock || 0),
     stock_minimum: Number(form.stock_minimum || 0),
-    image: form.image || '',
     is_active: Boolean(form.is_active),
     notes: form.notes || '',
-
     mtg_card_id: form.mtg_card_id ? Number(form.mtg_card_id) : null,
     condition: form.condition,
     language: form.language,
     is_foil: Boolean(form.is_foil),
     edition: form.edition || '',
-
     sealed_kind: form.sealed_kind || '',
     set_code: form.set_code || '',
   };
+
+  // Solo incluir image si tiene valor para evitar error de validación URLField
+  if (form.image?.trim()) {
+    payload.image = form.image.trim();
+  }
+
+  return payload;
 };
 
 const buildPayload = (form) => {

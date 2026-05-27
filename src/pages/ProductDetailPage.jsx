@@ -70,15 +70,17 @@ export default function ProductDetailPage() {
 
         setProduct(data);
 
-        try {
-          const kardexResponse = await api.productKardex(id);
+        if (isAdmin || isWorker) {
+          try {
+            const kardexResponse = await api.productKardex(id);
 
-          if (alive) {
-            setKardex(kardexResponse.data || []);
-          }
-        } catch {
-          if (alive) {
-            setKardex([]);
+            if (alive) {
+              setKardex(kardexResponse.data || []);
+            }
+          } catch {
+            if (alive) {
+              setKardex([]);
+            }
           }
         }
       } catch {
@@ -97,7 +99,7 @@ export default function ProductDetailPage() {
     return () => {
       alive = false;
     };
-  }, [id]);
+  }, [id, isAdmin, isWorker]);
 
   const handleQuantityChange = (value) => {
     const nextQuantity = Math.max(1, Number(value || 1));

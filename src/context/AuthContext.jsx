@@ -5,6 +5,7 @@ import {
   useMemo,
   useState,
 } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { api } from '../api/endpoints';
 import { notyf } from '../api/notifier';
@@ -35,6 +36,7 @@ const getUserRole = (user) => {
 };
 
 export function AuthProvider({ children }) {
+  const navigate = useNavigate();
   const [user, setUser] = useState(getStoredUser);
   const [token, setToken] = useState(() => localStorage.getItem('authToken'));
   const [refreshToken, setRefreshToken] = useState(() =>
@@ -82,6 +84,16 @@ export function AuthProvider({ children }) {
       notyf.success('Sesión cerrada.');
     }
   }, []);
+
+  useEffect(() => {
+    const handleExpired = () => {
+      notyf.error('Tu sesión expiró. Inicia sesión nuevamente.');
+      navigate('/login');
+    };
+
+    window.addEventListener('auth:session-expired', handleExpired);
+    return () => window.removeEventListener('auth:session-expired', handleExpired);
+  }, [navigate]);
 
   useEffect(() => {
     if (!token) {

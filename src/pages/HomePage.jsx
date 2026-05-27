@@ -129,8 +129,8 @@ export default function HomePage() {
                 alt={`Banner ${i + 1}`}
                 style={{
                   height: 'clamp(200px, 35vw, 420px)',
-                  objectFit: 'cover',
-                  objectPosition: 'center',
+                  objectFit: 'contain',
+                  background: '#000',
                 }}
               />
             </div>

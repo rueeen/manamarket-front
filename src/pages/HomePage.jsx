@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { api } from '../api/endpoints';
-import { fetchAllPaginated } from '../api/pagination';
 import ProductCarousel from '../components/ProductCarousel';
 import ProductSlider from '../components/ProductSlider';
 import { useCart } from '../hooks/useCart';
@@ -60,12 +59,15 @@ export default function HomePage() {
     setLoading(true);
 
     try {
-      const data = await fetchAllPaginated(api.getProducts, {
-        active: 'true',
-        available: 'true',
-      });
+      const [page1, page2] = await Promise.all([
+        api.getProducts({ active: 'true', available: 'true', page: 1 }),
+        api.getProducts({ active: 'true', available: 'true', page: 2 }),
+      ]);
 
-      setProducts(data);
+      const results1 = page1.data?.results || page1.data || [];
+      const results2 = page2.data?.results || page2.data || [];
+
+      setProducts([...results1, ...results2]);
     } catch {
       // El apiClient ya muestra el error.
     } finally {

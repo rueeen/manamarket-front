@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
@@ -68,6 +69,16 @@ export default function AdminSidebar({ open, onClose }) {
   const { logout, role, isAdmin, isWorker } = useAuth();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (open) {
+      document.body.classList.add('sidebar-open');
+    } else {
+      document.body.classList.remove('sidebar-open');
+    }
+
+    return () => document.body.classList.remove('sidebar-open');
+  }, [open]);
+
   const canSee = (item) => {
     if (isAdmin) return true;
     if (isWorker) return item.roles.includes('worker');
@@ -80,37 +91,45 @@ export default function AdminSidebar({ open, onClose }) {
   };
 
   return (
-    <aside className={`admin-sidebar ${open ? 'open' : ''}`}>
-      <div className="admin-brand">
-        <i className="bi bi-magic me-2" />
-        ManaMarket Admin
-      </div>
+    <>
+      <div
+        className={`admin-sidebar-overlay ${open ? 'open' : ''}`}
+        onClick={onClose}
+        aria-hidden="true"
+      />
 
-      <nav className="d-flex flex-column gap-1">
-        {menuItems.filter(canSee).map((item) => (
-          <NavLink
-            key={item.to}
-            to={item.to}
-            onClick={onClose}
-            className={({ isActive }) =>
-              `admin-link ${isActive ? 'active' : ''}`
-            }
-          >
-            <i className={`bi ${item.icon}`} />
-            <span>{item.label}</span>
+      <aside className={`admin-sidebar ${open ? 'open' : ''}`}>
+        <div className="admin-brand">
+          <i className="bi bi-magic me-2" />
+          ManaMarket Admin
+        </div>
+
+        <nav className="d-flex flex-column gap-1">
+          {menuItems.filter(canSee).map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              onClick={onClose}
+              className={({ isActive }) =>
+                `admin-link ${isActive ? 'active' : ''}`
+              }
+            >
+              <i className={`bi ${item.icon}`} />
+              <span>{item.label}</span>
+            </NavLink>
+          ))}
+        </nav>
+
+        <div className="mt-auto d-grid gap-2 pt-3">
+          <NavLink className="btn btn-outline-secondary" to="/" onClick={onClose}>
+            Volver a la tienda
           </NavLink>
-        ))}
-      </nav>
 
-      <div className="mt-auto d-grid gap-2 pt-3">
-        <NavLink className="btn btn-outline-secondary" to="/" onClick={onClose}>
-          Volver a la tienda
-        </NavLink>
-
-        <button type="button" className="btn btn-primary" onClick={handleLogout}>
-          Cerrar sesión
-        </button>
-      </div>
-    </aside>
+          <button type="button" className="btn btn-primary" onClick={handleLogout}>
+            Cerrar sesión
+          </button>
+        </div>
+      </aside>
+    </>
   );
 }

@@ -150,8 +150,11 @@ export default function MainLayout() {
         </div>
       </nav>
 
-      <main className="container py-4 main-container">
-        <Outlet />
+      <main>
+        <div className="main-fullwidth-slot" id="fullwidth-slot" />
+        <div className="container py-4 main-container">
+          <Outlet />
+        </div>
       </main>
 
       <footer className="footer-main py-5 mt-5">

@@ -2,6 +2,7 @@ import { Link, NavLink, Outlet } from 'react-router-dom';
 
 import { useAuth } from '../hooks/useAuth';
 import { useCart } from '../hooks/useCart';
+import bgImg from '../images/background.png';
 import logoImg from '../images/logo.png';
 
 const roleLabels = {
@@ -26,15 +27,37 @@ export default function MainLayout() {
   const cartItemsCount = items?.length || 0;
 
   return (
-    <>
+    <div
+      style={{
+        minHeight: '100vh',
+        backgroundImage: `
+          linear-gradient(
+            to bottom,
+            rgba(11,18,32,0.74) 0%,
+            rgba(11,18,32,0.82) 35%,
+            rgba(11,18,32,0.95) 100%
+          ),
+          url(${bgImg})
+        `,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center top',
+        backgroundAttachment: 'fixed',
+      }}
+    >
       <nav className="navbar navbar-expand-lg main-navbar sticky-top">
         <div className="container">
           <Link className="navbar-brand d-flex align-items-center gap-2" to="/">
             <img
               src={logoImg}
-              alt="ManaMarket"
-              style={{ height: 44, width: 'auto', objectFit: 'contain' }}
+              alt="ManaMarket logo"
+              style={{ height: 42, width: 'auto', objectFit: 'contain' }}
             />
+            <span
+              className="fw-bold"
+              style={{ fontSize: '1.1rem', letterSpacing: '0.04em', color: 'var(--color-text)' }}
+            >
+              ManaMarket
+            </span>
           </Link>
 
           <button
@@ -197,6 +220,6 @@ export default function MainLayout() {
           </div>
         </div>
       </footer>
-    </>
+    </div>
   );
 }

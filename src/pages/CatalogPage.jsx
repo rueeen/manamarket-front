@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { api } from '../api/endpoints';
 import ProductSlider from '../components/ProductSlider';
 import { useCart } from '../hooks/useCart';
@@ -66,8 +66,12 @@ export default function CatalogPage() {
   const [rarity, setRarity] = useState('');
   const [foil, setFoil] = useState('');
   const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [count, setCount] = useState(0);
+  const [nextUrl, setNextUrl] = useState(null);
+  const [page, setPage] = useState(1);
   const supportsSingleFiltersRef = useRef(false);
+  const sentinelRef = useRef(null);
 
   const { addItem } = useCart();
 
@@ -94,9 +98,14 @@ export default function CatalogPage() {
 
   useEffect(() => {
     setLoading(true);
+    setProducts([]);
+    setNextUrl(null);
+    setPage(1);
+
     const params = {
       active: 'true',
       available: 'true',
+      page: 1,
     };
 
     if (debouncedQuery.trim()) params.search = debouncedQuery.trim();
@@ -104,16 +113,60 @@ export default function CatalogPage() {
 
     api.getProducts(params)
       .then(({ data }) => {
-        const fetchedProducts = data?.results || data || [];
-        setProducts(fetchedProducts);
-        setCount(Number(data?.count || fetchedProducts.length || 0));
+        const fetched = data?.results || data || [];
+        setProducts(fetched);
+        setCount(Number(data?.count || fetched.length || 0));
+        setNextUrl(data?.next || null);
       })
       .catch(() => {
         setProducts([]);
         setCount(0);
+        setNextUrl(null);
       })
       .finally(() => setLoading(false));
   }, [debouncedQuery, type]);
+
+  const loadMore = useCallback(() => {
+    if (loadingMore || !nextUrl) return;
+
+    setLoadingMore(true);
+
+    const nextPage = page + 1;
+    const params = {
+      active: 'true',
+      available: 'true',
+      page: nextPage,
+    };
+
+    if (debouncedQuery.trim()) params.search = debouncedQuery.trim();
+    if (type) params.product_type = type;
+
+    api.getProducts(params)
+      .then(({ data }) => {
+        const fetched = data?.results || data || [];
+        setProducts((prev) => [...prev, ...fetched]);
+        setNextUrl(data?.next || null);
+        setPage(nextPage);
+      })
+      .catch(() => {})
+      .finally(() => setLoadingMore(false));
+  }, [loadingMore, nextUrl, page, debouncedQuery, type]);
+
+  useEffect(() => {
+    if (!sentinelRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && nextUrl && !loadingMore) {
+          loadMore();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(sentinelRef.current);
+    return () => observer.disconnect();
+  }, [nextUrl, loadingMore, loadMore]);
 
   const showSingleOnlyFilters = type === '' || type === 'single';
 
@@ -147,6 +200,8 @@ export default function CatalogPage() {
     setType('');
     setRarity('');
     setFoil('');
+    setPage(1);
+    setNextUrl(null);
   };
 
   return (
@@ -229,6 +284,22 @@ export default function CatalogPage() {
               <ProductSlider products={groupedProducts[sectionType]} onAdd={addItem} variant={sectionType} />
             </section>
           ))}
+        </div>
+      )}
+
+      {/* Sentinel para scroll infinito */}
+      <div ref={sentinelRef} style={{ height: 1 }} />
+
+      {loadingMore && (
+        <div className="text-center py-4 text-muted">
+          <div className="spinner-border spinner-border-sm me-2" role="status" />
+          Cargando más productos...
+        </div>
+      )}
+
+      {!loadingMore && !nextUrl && products.length > 0 && (
+        <div className="text-center py-4 text-muted small">
+          Mostraste todos los productos disponibles.
         </div>
       )}
     </>

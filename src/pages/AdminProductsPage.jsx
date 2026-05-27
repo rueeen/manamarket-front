@@ -181,6 +181,9 @@ export default function AdminProductsPage() {
     const payload = buildPayload(form);
     const isFormData = payload instanceof FormData;
 
+    console.log('form.image:', form.image);
+    console.log('payload:', payload instanceof FormData ? 'FormData' : JSON.stringify(payload));
+
     if (!validationPayload.name) {
       notyf.error('El nombre del producto es obligatorio.');
       return;

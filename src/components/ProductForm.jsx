@@ -361,7 +361,10 @@ export default function ProductForm({
                 <button
                   type="button"
                   className={`btn btn-sm ${!form._imageMode || form._imageMode === 'url' ? 'btn-primary' : 'btn-outline-secondary'}`}
-                  onClick={() => onChange('_imageMode', 'url')}
+                  onClick={() => {
+                    onChange('_imageMode', 'url');
+                    onChange('_imageFile', null);
+                  }}
                   disabled={saving}
                 >
                   URL
@@ -369,7 +372,10 @@ export default function ProductForm({
                 <button
                   type="button"
                   className={`btn btn-sm ${form._imageMode === 'file' ? 'btn-primary' : 'btn-outline-secondary'}`}
-                  onClick={() => onChange('_imageMode', 'file')}
+                  onClick={() => {
+                    onChange('_imageMode', 'file');
+                    onChange('image', '');
+                  }}
                   disabled={saving}
                 >
                   Subir archivo

@@ -32,7 +32,6 @@ import ScryfallSingleCreate from './pages/ScryfallSingleCreate';
 import PricingSettingsPage from './pages/PricingSettingsPage';
 import PaymentFinalPage from './pages/PaymentFinalPage';
 import PaymentReturnPage from './pages/PaymentReturnPage';
-import DigitalLibraryPage from './pages/DigitalLibraryPage';
 import ConfirmPasswordResetPage from './pages/ConfirmPasswordResetPage';
 
 export default function App() {
@@ -63,16 +62,6 @@ export default function App() {
             </CustomerRoute>
           }
         />
-
-        <Route
-          path="/biblioteca"
-          element={
-            <CustomerRoute>
-              <DigitalLibraryPage />
-            </CustomerRoute>
-          }
-        />
-
         <Route
           path="/mi-cuenta"
           element={

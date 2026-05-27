@@ -391,7 +391,7 @@ export default function ProductForm({
           <h6 className="text-uppercase text-secondary mb-1">Precio y stock</h6>
         </div>
 
-        <div className="col-md-3">
+        <div className="col-md-4">
           <label className="form-label">Precio CLP</label>
           <input
             className="form-control"
@@ -405,23 +405,7 @@ export default function ProductForm({
           />
         </div>
 
-        <div className="col-md-3">
-          <label className="form-label">Stock inicial</label>
-          <input
-            className="form-control"
-            type="number"
-            min="0"
-            placeholder="Stock"
-            value={form.stock ?? '0'}
-            onChange={(event) => onChange('stock', event.target.value)}
-            disabled={saving}
-          />
-          <small className="text-muted">
-            Idealmente usar órdenes de compra o Kardex.
-          </small>
-        </div>
-
-        <div className="col-md-3">
+        <div className="col-md-4">
           <label className="form-label">Stock mínimo</label>
           <input
             className="form-control"
@@ -434,7 +418,7 @@ export default function ProductForm({
           />
         </div>
 
-        <div className="col-md-3">
+        <div className="col-md-4">
           <div className="alert alert-secondary mb-0 h-100">
             El stock operativo se debe gestionar mediante Kardex, órdenes de
             compra o movimientos autorizados.

@@ -209,57 +209,93 @@ export default function ProductTable({
                 </td>
 
                 <td className="text-end">
-                  <div className="d-flex justify-content-end gap-2 flex-wrap">
+                  <div className="dropdown">
                     <button
                       type="button"
-                      className="btn btn-outline-info btn-sm"
-                      onClick={() => onViewKardex?.(product)}
-                    >
-                      Ver Kardex
-                    </button>
-
-                    <button
-                      type="button"
-                      className="btn btn-outline-success btn-sm"
-                      onClick={() => onCreatePO?.(product)}
-                    >
-                      Crear OC
-                    </button>
-
-                    <button
-                      type="button"
-                      className="btn btn-outline-primary btn-sm"
-                      onClick={() => onEdit?.(product)}
-                    >
-                      Editar
-                    </button>
-
-                    <button
-                      type="button"
-                      className="btn btn-outline-success btn-sm"
-                      onClick={() => onApplySuggestedPrice?.(product)}
+                      className="btn btn-outline-secondary btn-sm dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
                       disabled={isApplyingSuggested || isToggling || isDeleting}
                     >
-                      {isApplyingSuggested ? 'Aplicando...' : 'Aplicar sugerido'}
+                      <i className="bi bi-three-dots-vertical" />
                     </button>
 
-                    <button
-                      type="button"
-                      className="btn btn-warning btn-sm"
-                      onClick={() => onToggleActive?.(product)}
-                      disabled={isApplyingSuggested || isToggling || isDeleting}
-                    >
-                      {isToggling ? 'Procesando...' : (product.is_active ? 'Desactivar' : 'Activar')}
-                    </button>
+                    <ul className="dropdown-menu dropdown-menu-end dropdown-menu-dark">
 
-                    <button
-                      type="button"
-                      className="btn btn-outline-danger btn-sm"
-                      onClick={() => onDelete?.(product)}
-                      disabled={isApplyingSuggested || isToggling || isDeleting}
-                    >
-                      {isDeleting ? 'Eliminando...' : 'Eliminar'}
-                    </button>
+                      <li>
+                        <button
+                          type="button"
+                          className="dropdown-item"
+                          onClick={() => onEdit?.(product)}
+                        >
+                          <i className="bi bi-pencil me-2" />
+                          Editar
+                        </button>
+                      </li>
+
+                      <li>
+                        <button
+                          type="button"
+                          className="dropdown-item"
+                          onClick={() => onViewKardex?.(product)}
+                        >
+                          <i className="bi bi-journal-text me-2" />
+                          Ver Kardex
+                        </button>
+                      </li>
+
+                      <li>
+                        <button
+                          type="button"
+                          className="dropdown-item"
+                          onClick={() => onCreatePO?.(product)}
+                        >
+                          <i className="bi bi-bag-check me-2" />
+                          Crear OC
+                        </button>
+                      </li>
+
+                      {sugeridoClp > 0 && precioVenta !== sugeridoClp && (
+                        <li>
+                          <button
+                            type="button"
+                            className="dropdown-item"
+                            onClick={() => onApplySuggestedPrice?.(product)}
+                            disabled={isApplyingSuggested}
+                          >
+                            <i className="bi bi-magic me-2" />
+                            {isApplyingSuggested ? 'Aplicando...' : 'Aplicar precio sugerido'}
+                          </button>
+                        </li>
+                      )}
+
+                      <li><hr className="dropdown-divider" /></li>
+
+                      <li>
+                        <button
+                          type="button"
+                          className={`dropdown-item ${product.is_active ? 'text-warning' : 'text-success'}`}
+                          onClick={() => onToggleActive?.(product)}
+                          disabled={isToggling}
+                        >
+                          <i className={`bi ${product.is_active ? 'bi-eye-slash' : 'bi-eye'} me-2`} />
+                          {isToggling ? 'Procesando...' : (product.is_active ? 'Desactivar' : 'Activar')}
+                        </button>
+                      </li>
+
+                      <li>
+                        <button
+                          type="button"
+                          className="dropdown-item text-danger"
+                          onClick={() => onDelete?.(product)}
+                          disabled={isDeleting}
+                        >
+                          <i className="bi bi-trash me-2" />
+                          {isDeleting ? 'Eliminando...' : 'Eliminar'}
+                        </button>
+                      </li>
+
+                    </ul>
                   </div>
                 </td>
               </tr>

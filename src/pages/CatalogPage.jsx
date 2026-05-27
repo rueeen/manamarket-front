@@ -70,6 +70,7 @@ export default function CatalogPage() {
   const [count, setCount] = useState(0);
   const [nextUrl, setNextUrl] = useState(null);
   const [page, setPage] = useState(1);
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const supportsSingleFiltersRef = useRef(false);
   const sentinelRef = useRef(null);
 
@@ -167,6 +168,12 @@ export default function CatalogPage() {
     observer.observe(sentinelRef.current);
     return () => observer.disconnect();
   }, [nextUrl, loadingMore, loadMore]);
+
+  useEffect(() => {
+    const onScroll = () => setShowScrollTop(window.scrollY > 400);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const showSingleOnlyFilters = type === '' || type === 'single';
 
@@ -301,6 +308,35 @@ export default function CatalogPage() {
         <div className="text-center py-4 text-muted small">
           Mostraste todos los productos disponibles.
         </div>
+      )}
+
+      {showScrollTop && (
+        <button
+          type="button"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label="Volver arriba"
+          style={{
+            position: 'fixed',
+            bottom: '1.5rem',
+            right: '1.5rem',
+            zIndex: 999,
+            width: 44,
+            height: 44,
+            borderRadius: '50%',
+            background: 'var(--color-primary)',
+            border: 'none',
+            color: '#fff',
+            fontSize: 20,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            boxShadow: '0 4px 16px rgba(124,58,237,0.5)',
+            transition: 'opacity 0.2s ease',
+          }}
+        >
+          <i className="bi bi-arrow-up" />
+        </button>
       )}
     </>
   );

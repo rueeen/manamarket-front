@@ -71,6 +71,26 @@ const buildProductPayload = (form) => {
   };
 };
 
+const buildPayload = (form) => {
+  const hasFile = form._imageMode === 'file' && form._imageFile instanceof File;
+
+  if (hasFile) {
+    const formData = new FormData();
+    const payload = buildProductPayload(form);
+
+    Object.entries(payload).forEach(([key, value]) => {
+      if (value !== null && value !== undefined) {
+        formData.append(key, value);
+      }
+    });
+
+    formData.append('image', form._imageFile);
+    return formData;
+  }
+
+  return buildProductPayload(form);
+};
+
 export default function AdminProductsPage() {
   const [products, setProducts] = useState([]);
 
@@ -153,24 +173,26 @@ export default function AdminProductsPage() {
   const submit = async (event) => {
     event.preventDefault();
 
-    const payload = buildProductPayload(form);
+    const validationPayload = buildProductPayload(form);
+    const payload = buildPayload(form);
+    const isFormData = payload instanceof FormData;
 
-    if (!payload.name) {
+    if (!validationPayload.name) {
       notyf.error('El nombre del producto es obligatorio.');
       return;
     }
 
-    if (!payload.product_type) {
+    if (!validationPayload.product_type) {
       notyf.error('El tipo de producto es obligatorio.');
       return;
     }
 
-    if (payload.price_clp < 0) {
+    if (validationPayload.price_clp < 0) {
       notyf.error('El precio no puede ser negativo.');
       return;
     }
 
-    if (payload.stock < 0) {
+    if (validationPayload.stock < 0) {
       notyf.error('El stock no puede ser negativo.');
       return;
     }
@@ -179,10 +201,10 @@ export default function AdminProductsPage() {
 
     try {
       if (editingProduct) {
-        await api.patchProduct(editingProduct.id, payload);
+        await api.updateProduct(editingProduct.id, payload, isFormData);
         notyf.success('Producto actualizado correctamente.');
       } else {
-        await api.createProduct(payload);
+        await api.createProduct(payload, isFormData);
         notyf.success('Producto creado correctamente.');
       }
 

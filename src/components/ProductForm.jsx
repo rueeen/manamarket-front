@@ -6,8 +6,6 @@ export const PRODUCT_TYPE_OPTIONS = [
   { value: 'sealed', label: 'Producto sellado' },
   { value: 'bundle', label: 'Bundle' },
   { value: 'accessory', label: 'Accesorio' },
-  { value: 'service', label: 'Servicio / encargo' },
-  { value: 'other', label: 'Otro' },
 ];
 
 export const CONDITION_OPTIONS = [
@@ -352,15 +350,69 @@ export default function ProductForm({
           />
         </div>
 
+        {/* Campo imagen — URL para singles, URL o archivo para bundle/sealed/accessory */}
         <div className="col-md-6">
-          <label className="form-label">URL imagen</label>
-          <input
-            className="form-control"
-            placeholder="URL imagen"
-            value={form.image}
-            onChange={(event) => onChange('image', event.target.value)}
-            disabled={saving}
-          />
+          <label className="form-label">Imagen</label>
+
+          {(isBundle || isSealed || form.product_type === 'accessory') ? (
+            <div>
+              {/* Toggle URL / Archivo */}
+              <div className="d-flex gap-2 mb-2">
+                <button
+                  type="button"
+                  className={`btn btn-sm ${!form._imageMode || form._imageMode === 'url' ? 'btn-primary' : 'btn-outline-secondary'}`}
+                  onClick={() => onChange('_imageMode', 'url')}
+                  disabled={saving}
+                >
+                  URL
+                </button>
+                <button
+                  type="button"
+                  className={`btn btn-sm ${form._imageMode === 'file' ? 'btn-primary' : 'btn-outline-secondary'}`}
+                  onClick={() => onChange('_imageMode', 'file')}
+                  disabled={saving}
+                >
+                  Subir archivo
+                </button>
+              </div>
+
+              {form._imageMode === 'file' ? (
+                <input
+                  className="form-control"
+                  type="file"
+                  accept="image/*"
+                  disabled={saving}
+                  onChange={(event) => onChange('_imageFile', event.target.files[0] || null)}
+                />
+              ) : (
+                <input
+                  className="form-control"
+                  placeholder="https://..."
+                  value={form.image}
+                  onChange={(event) => onChange('image', event.target.value)}
+                  disabled={saving}
+                />
+              )}
+
+              {/* Preview */}
+              {(form.image || form._imageFile) && (
+                <img
+                  src={form._imageFile ? URL.createObjectURL(form._imageFile) : form.image}
+                  alt="Preview"
+                  style={{ marginTop: 8, height: 80, objectFit: 'contain', borderRadius: 6, background: '#0b1220' }}
+                />
+              )}
+            </div>
+          ) : (
+            /* Singles: solo URL (la imagen viene de Scryfall) */
+            <input
+              className="form-control"
+              placeholder="URL imagen"
+              value={form.image}
+              onChange={(event) => onChange('image', event.target.value)}
+              disabled={saving}
+            />
+          )}
         </div>
 
         <div className="col-12">

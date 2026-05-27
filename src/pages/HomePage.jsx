@@ -162,10 +162,12 @@ export default function HomePage() {
       {/* Sección sobre nosotros */}
       <section
         style={{
-          padding: '2.5rem 0 2rem',
+          minHeight: 'calc(100vh - var(--navbar-height) - var(--banner-height))',
+          padding: '2.5rem 0',
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
           gap: '1rem',
+          alignContent: 'center',
         }}
       >
         {/* Quiénes somos */}

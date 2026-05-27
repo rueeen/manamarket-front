@@ -35,6 +35,8 @@
   --shadow-card-hover: 0 14px 30px rgba(2, 6, 23, 0.7);
 
   --admin-sidebar-width: 260px;
+  --banner-height: clamp(200px, 35vw, 420px);
+  --navbar-height: 60px;
 }
 
 /* =========================

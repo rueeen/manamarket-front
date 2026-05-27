@@ -223,14 +223,14 @@ img {
 }
 
 .btn-outline-primary {
-  border-color: var(--color-blue);
-  color: var(--color-blue-soft);
+  border-color: var(--color-primary);
+  color: #c4b5fd;
 }
 
 .btn-outline-primary:hover,
 .btn-outline-primary:focus {
-  background: var(--color-blue);
-  border-color: var(--color-blue);
+  background: var(--color-primary);
+  border-color: var(--color-primary);
   color: var(--color-light);
 }
 

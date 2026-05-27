@@ -220,7 +220,10 @@ export default function ProductTable({
                     <button
                       type="button"
                       className="btn btn-outline-secondary btn-sm"
-                      onClick={() => setOpenMenuId(openMenuId === product.id ? null : product.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setOpenMenuId(openMenuId === product.id ? null : product.id);
+                      }}
                       disabled={isApplyingSuggested || isToggling || isDeleting}
                     >
                       <i className="bi bi-three-dots-vertical" />
@@ -242,8 +245,94 @@ export default function ProductTable({
                           padding: '0.25rem 0',
                           margin: 0,
                         }}
+                        onClick={(e) => e.stopPropagation()}
                       >
-                        {/* items del menú igual que antes */}
+                        <li>
+                          <button
+                            type="button"
+                            className="dropdown-item"
+                            style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', padding: '0.45rem 1rem', color: 'var(--color-text-soft)', fontSize: '0.875rem', cursor: 'pointer' }}
+                            onMouseEnter={e => e.currentTarget.style.background = 'var(--color-surface-hover)'}
+                            onMouseLeave={e => e.currentTarget.style.background = 'none'}
+                            onClick={() => { onEdit?.(product); setOpenMenuId(null); }}
+                          >
+                            <i className="bi bi-pencil me-2" />Editar
+                          </button>
+                        </li>
+
+                        <li>
+                          <button
+                            type="button"
+                            className="dropdown-item"
+                            style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', padding: '0.45rem 1rem', color: 'var(--color-text-soft)', fontSize: '0.875rem', cursor: 'pointer' }}
+                            onMouseEnter={e => e.currentTarget.style.background = 'var(--color-surface-hover)'}
+                            onMouseLeave={e => e.currentTarget.style.background = 'none'}
+                            onClick={() => { onViewKardex?.(product); setOpenMenuId(null); }}
+                          >
+                            <i className="bi bi-journal-text me-2" />Ver Kardex
+                          </button>
+                        </li>
+
+                        <li>
+                          <button
+                            type="button"
+                            className="dropdown-item"
+                            style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', padding: '0.45rem 1rem', color: 'var(--color-text-soft)', fontSize: '0.875rem', cursor: 'pointer' }}
+                            onMouseEnter={e => e.currentTarget.style.background = 'var(--color-surface-hover)'}
+                            onMouseLeave={e => e.currentTarget.style.background = 'none'}
+                            onClick={() => { onCreatePO?.(product); setOpenMenuId(null); }}
+                          >
+                            <i className="bi bi-bag-check me-2" />Crear OC
+                          </button>
+                        </li>
+
+                        {sugeridoClp > 0 && precioVenta !== sugeridoClp && (
+                          <li>
+                            <button
+                              type="button"
+                              className="dropdown-item"
+                              style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', padding: '0.45rem 1rem', color: 'var(--color-text-soft)', fontSize: '0.875rem', cursor: 'pointer' }}
+                              onMouseEnter={e => e.currentTarget.style.background = 'var(--color-surface-hover)'}
+                              onMouseLeave={e => e.currentTarget.style.background = 'none'}
+                              disabled={isApplyingSuggested}
+                              onClick={() => { onApplySuggestedPrice?.(product); setOpenMenuId(null); }}
+                            >
+                              <i className="bi bi-magic me-2" />
+                              {isApplyingSuggested ? 'Aplicando...' : 'Aplicar precio sugerido'}
+                            </button>
+                          </li>
+                        )}
+
+                        <li><hr style={{ margin: '0.25rem 0', borderColor: 'var(--color-border)' }} /></li>
+
+                        <li>
+                          <button
+                            type="button"
+                            style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', padding: '0.45rem 1rem', fontSize: '0.875rem', cursor: 'pointer', color: product.is_active ? 'var(--color-warning)' : 'var(--color-success)' }}
+                            onMouseEnter={e => e.currentTarget.style.background = 'var(--color-surface-hover)'}
+                            onMouseLeave={e => e.currentTarget.style.background = 'none'}
+                            disabled={isToggling}
+                            onClick={() => { onToggleActive?.(product); setOpenMenuId(null); }}
+                          >
+                            <i className={`bi ${product.is_active ? 'bi-eye-slash' : 'bi-eye'} me-2`} />
+                            {isToggling ? 'Procesando...' : product.is_active ? 'Desactivar' : 'Activar'}
+                          </button>
+                        </li>
+
+                        <li>
+                          <button
+                            type="button"
+                            style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', padding: '0.45rem 1rem', fontSize: '0.875rem', cursor: 'pointer', color: 'var(--color-danger)' }}
+                            onMouseEnter={e => e.currentTarget.style.background = 'var(--color-surface-hover)'}
+                            onMouseLeave={e => e.currentTarget.style.background = 'none'}
+                            disabled={isDeleting}
+                            onClick={() => { onDelete?.(product); setOpenMenuId(null); }}
+                          >
+                            <i className="bi bi-trash me-2" />
+                            {isDeleting ? 'Eliminando...' : 'Eliminar'}
+                          </button>
+                        </li>
+
                       </ul>
                     )}
                   </div>

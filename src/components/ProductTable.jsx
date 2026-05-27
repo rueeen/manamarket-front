@@ -20,18 +20,6 @@ const getSingleCard = (product) => {
   return product.single_card || {};
 };
 
-const getCardImage = (product) => {
-  const singleCard = getSingleCard(product);
-  const mtgCard = singleCard.mtg_card || product.mtg_card || {};
-
-  return (
-    product.image ||
-    mtgCard.image_small ||
-    mtgCard.image_normal ||
-    mtgCard.image_large ||
-    ''
-  );
-};
 
 const getCondition = (product) => {
   return getSingleCard(product).condition || product.condition || '-';
@@ -122,8 +110,6 @@ export default function ProductTable({
       <table ref={tableRef} className="table align-middle mb-0">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Imagen</th>
             <th>Nombre</th>
                         <th>Tipo</th>
             <th>Condición</th>
@@ -143,7 +129,6 @@ export default function ProductTable({
           {products.map((product) => {
             const stock = Number(product.stock || 0);
             const minimum = Number(product.stock_minimum || 1);
-            const image = getCardImage(product);
             const isSingle = product.product_type === 'single';
             const isFoil = getIsFoil(product);
             const rawPriceClp = Number(product.price_clp ?? 0);
@@ -167,25 +152,6 @@ export default function ProductTable({
 
             return (
               <tr key={product.id}>
-                <td>{product.id}</td>
-
-                <td>
-                  {image ? (
-                    <img
-                      src={image}
-                      alt={product.name}
-                      width="42"
-                      height="58"
-                      style={{
-                        objectFit: 'cover',
-                        borderRadius: 6,
-                      }}
-                    />
-                  ) : (
-                    <span className="text-muted">-</span>
-                  )}
-                </td>
-
                 <td>
                   <div className="fw-semibold">{product.name}</div>
                   {product.single_card?.mtg_card?.set_code && (
